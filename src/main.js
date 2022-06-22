@@ -6,6 +6,7 @@ const hashMap = xObject || [
     { logo: "A", url: "https://www.acfun.cn" },
     { logo: "B", url: "https://www.bilibili.com" }
 ];
+let isInputFocus = false
 
 const simplifyUrl = (url) => {
     return url.replace('https://', '')
@@ -41,6 +42,15 @@ const render = () => {
 
 render()
 
+$('.searchForm > input').focus(() => {
+    isInputFocus = true
+    console.log(isInputFocus, "input")
+})
+
+$('.searchForm > input').blur(() => {
+    isInputFocus = false
+    console.log(isInputFocus, "input")
+})
 
 $('.addButton').on('click', () => {
     let url = window.prompt('请问你要添加的网址是啥？')
@@ -63,6 +73,7 @@ window.onbeforeunload = () => {
 
 //键盘事件
 $(document).on('keypress', (e) => {
+    if (isInputFocus) return
     const { key } = e    //const key = e.key
     for (let i = 0; i < hashMap.length; i++) {
         if (hashMap[i].logo.toLowerCase() === key) {
